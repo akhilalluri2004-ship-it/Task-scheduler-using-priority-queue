@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Task Scheduler</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>TaskHeap</span>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" data-target="home-view" class="active">Home</a></li>
+                <li><a href="#" data-target="add-task-view">Add Task</a></li>
+                <li><a href="#" data-target="scheduler-view">Scheduler</a></li>
+                <li><a href="#" data-target="heap-view">Heap Vis</a></li>
+                <li><a href="#" data-target="about-view">About DSA</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Home View -->
+        <section id="home-view" class="view active-view">
+            <div class="hero">
+                <h1>Smart Task Scheduler</h1>
+                <p>A powerful scheduling tool built with a custom <strong>Min-Heap Priority Queue</strong>.</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fa-solid fa-bolt"></i>
+                        <h3>Fast Execution</h3>
+                        <p>O(log n) insertions and deletions using a binary heap.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fa-solid fa-list-check"></i>
+                        <h3>Priority Based</h3>
+                        <p>Tasks are ordered by priority, then by deadline.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fa-solid fa-eye"></i>
+                        <h3>Visual Learning</h3>
+                        <p>See exactly how the heap organizes your tasks.</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="navigateTo('add-task-view')">Get Started <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <!-- Add Task View -->
+        <section id="add-task-view" class="view">
+            <div class="card form-card">
+                <h2><i class="fa-solid fa-plus"></i> Add New Task</h2>
+                <form id="add-task-form">
+                    <div class="form-group">
+                        <label for="task-name">Task Name</label>
+                        <input type="text" id="task-name" placeholder="e.g. Finish Math Assignment" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-deadline">Deadline</label>
+                        <input type="datetime-local" id="task-deadline" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Add to Queue</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Scheduler View -->
+        <section id="scheduler-view" class="view">
+            <div class="scheduler-header">
+                <h2><i class="fa-solid fa-calendar-check"></i> Scheduler Queue</h2>
+            </div>
+            
+            <div id="next-task-container" class="next-task-card hidden">
+                <h3><i class="fa-solid fa-star"></i> Up Next</h3>
+                <div class="next-task-details" id="next-task-content">
+                    <!-- Dynamic Content -->
+                </div>
+                <button class="btn btn-success" id="complete-next-btn"><i class="fa-solid fa-check"></i> Complete Task</button>
+            </div>
+
+            <div class="table-container">
+                <table id="tasks-table">
+                    <thead>
+                        <tr>
+                            <th>Priority</th>
+                            <th>Task Name</th>
+                            <th>Deadline</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tasks-tbody">
+                        <!-- Dynamic rows -->
+                    </tbody>
+                </table>
+                <div id="empty-state" class="empty-state">
+                    <i class="fa-solid fa-inbox"></i>
+                    <p>No tasks scheduled. Add some tasks to see them here.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Heap Visualization View -->
+        <section id="heap-view" class="view">
+            <h2><i class="fa-solid fa-diagram-project"></i> Heap Visualization</h2>
+            <p class="subtitle">Understand how your tasks are structured in memory.</p>
+            
+            <div class="card visualization-card">
+                <h3>Array Representation</h3>
+                <div id="heap-array-container" class="heap-array">
+                    <!-- Dynamic array boxes -->
+                </div>
+                <p class="explanation" id="heap-explanation">The array is currently empty.</p>
+            </div>
+
+            <div class="heap-operations-info">
+                <div class="info-card">
+                    <h4>Insert (Push)</h4>
+                    <p>Adds a new task to the end of the array, then "bubbles up" (Heapify-Up) by swapping with its parent until the Min-Heap property is restored.</p>
+                </div>
+                <div class="info-card">
+                    <h4>Extract Min (Pop)</h4>
+                    <p>Removes the root (most important task), moves the last element to the root, and "bubbles down" (Heapify-Down) by swapping with the smallest child.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About DSA View -->
+        <section id="about-view" class="view">
+            <h2><i class="fa-solid fa-book-open"></i> About Priority Queues & Heaps</h2>
+            <div class="content-text">
+                <h3>What is a Priority Queue?</h3>
+                <p>A priority queue is an abstract data type similar to a regular queue or stack data structure in which each element additionally has a "priority" associated with it. In a priority queue, an element with high priority is served before an element with low priority.</p>
+                
+                <h3>What is a Min-Heap?</h3>
+                <p>A Min-Heap is a specialized tree-based data structure that satisfies the heap property: for any given node <code>I</code>, the value of <code>I</code> is less than or equal to the values of its children. This means the smallest (or highest priority) element is always at the root.</p>
+                <p>In this project, a lower priority number means the task is MORE important. Hence, we use a Min-Heap!</p>
+
+                <h3>Why use a Heap for Task Scheduling?</h3>
+                <p>Heaps provide a highly efficient way to repeatedly find and remove the smallest/largest element. This is perfect for a scheduler that constantly needs to know the "next most important task".</p>
+
+                <div class="complexity-table">
+                    <h4>Time Complexity</h4>
+                    <table>
+                        <tr>
+                            <th>Operation</th>
+                            <th>Time Complexity</th>
+                        </tr>
+                        <tr>
+                            <td>Insert Task</td>
+                            <td><span class="badge badge-warning">O(log n)</span></td>
+                        </tr>
+                        <tr>
+                            <td>Get Highest Priority (Peek)</td>
+                            <td><span class="badge badge-success">O(1)</span></td>
+                        </tr>
+                        <tr>
+                            <td>Complete Highest Priority (Extract)</td>
+                            <td><span class="badge badge-warning">O(log n)</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/heap.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
